@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="无需持有 ETH，通过 ERC-2771 Relayer 在 Sepolia 转账 mUSDT。"
+    />
+    <meta name="theme-color" content="#07110e" />
+    <meta property="og:title" content="Gasless mUSDT · Sepolia" />
+    <meta
+      property="og:description"
+      content="只签名，不支付 ETH。Relayer 代付 Gas，手续费以 mUSDT 结算。"
+    />
+    <meta property="og:image" content="/og.png" />
+    <title>Gasless mUSDT · Sepolia</title>
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <main class="shell">
+      <nav class="nav">
+        <a class="brand" href="/" aria-label="Gasless mUSDT 首页">
+          <span class="brand-mark">G</span>
+          <span>Gasless <b>mUSDT</b></span>
+        </a>
+        <div class="network-pill">
+          <span class="network-dot"></span>
+          Sepolia
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div class="eyebrow">ERC-2771 · EIP-2612 · NON-CUSTODIAL</div>
+        <h1>只有 USDT，<br />也能发起链上交易。</h1>
+        <p>
+          你只需确认两次签名。Relayer 支付 Sepolia Gas，转账和服务费由智能合约一次完成。
+        </p>
+
+        <div class="trust-row" aria-label="安全特性">
+          <span>不托管私钥</span>
+          <span>不需要 ETH</span>
+          <span>Nonce 防重放</span>
+        </div>
+      </section>
+
+      <section class="app-grid">
+        <article class="transfer-card">
+          <div class="card-heading">
+            <div>
+              <span class="step-label">GASLESS TRANSFER</span>
+              <h2>发送 mUSDT</h2>
+            </div>
+            <button id="connectButton" class="wallet-button" type="button">
+              连接钱包
+            </button>
+          </div>
+
+          <div id="accountPanel" class="account-panel is-hidden">
+            <div>
+              <span class="account-status">
+                <i aria-hidden="true"></i>
+                钱包已连接
+              </span>
+              <strong id="walletAddress">—</strong>
+            </div>
+            <div class="balance-group">
+              <div>
+                <span>mUSDT</span>
+                <strong id="tokenBalance">—</strong>
+              </div>
+              <div>
+                <span>ETH</span>
+                <strong id="ethBalance">—</strong>
+              </div>
+            </div>
+          </div>
+
+          <form id="transferForm" novalidate>
+            <label for="recipientInput">接收地址</label>
+            <input
+              id="recipientInput"
+              name="recipient"
+              type="text"
+              inputmode="text"
+              autocomplete="off"
+              placeholder="0x..."
+              spellcheck="false"
+              required
+            />
+
+            <label for="amountInput">发送数量</label>
+            <div class="amount-field">
+              <input
+                id="amountInput"
+                name="amount"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                step="0.000001"
+                placeholder="0.00"
+                required
+              />
+              <span>mUSDT</span>
+            </div>
+
+            <div class="quote-box">
+              <div>
+                <span>Relayer 服务费</span>
+                <strong id="feeValue">连接钱包后获取</strong>
+              </div>
+              <div>
+                <span>你需要支付的 ETH</span>
+                <strong class="zero-fee">0 ETH</strong>
+              </div>
+            </div>
+
+            <button id="sendButton" class="send-button" type="submit">
+              <span>签名并发送</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <div id="statusPanel" class="status-panel is-hidden" aria-live="polite">
+            <div class="status-icon" id="statusIcon">1</div>
+            <div>
+              <strong id="statusTitle">准备签名</strong>
+              <p id="statusMessage">请在钱包中确认请求。</p>
+              <a
+                id="transactionLink"
+                class="is-hidden"
+                target="_blank"
+                rel="noreferrer"
+              >在 Etherscan 查看 ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <aside class="flow-card">
+          <span class="step-label">HOW IT WORKS</span>
+          <h2>两次签名，一笔交易</h2>
+
+          <ol class="flow-list">
+            <li>
+              <span>01</span>
+              <div>
+                <strong>Permit 授权</strong>
+                <p>授权本次 mUSDT 金额与服务费，不广播交易。</p>
+              </div>
+            </li>
+            <li>
+              <span>02</span>
+              <div>
+                <strong>Forward Request</strong>
+                <p>签署接收人、金额、Gas、Nonce 与有效期。</p>
+              </div>
+            </li>
+            <li>
+              <span>03</span>
+              <div>
+                <strong>Relayer 执行</strong>
+                <p>服务器校验并模拟请求，支付 ETH 后提交链上。</p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="contract-note">
+            <span>测试资产</span>
+            <strong>Mock USDT + EIP-2612 Permit</strong>
+            <p>Sepolia 演示代币，6 位小数，不是真实美元资产。</p>
+          </div>
+        </aside>
+      </section>
+
+      <footer>
+        <span>Sepolia testnet only</span>
+        <span>ERC-2771 reference implementation</span>
+      </footer>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "gasless-usdt-erc2771",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:coverage": "hardhat test --coverage",
+    "deploy:sepolia": "hardhat run scripts/deploy.ts --build-profile production --network sepolia",
+    "mint:sepolia": "hardhat run scripts/mint-demo.ts --network sepolia",
+    "relayer": "node --import tsx apps/relayer/src/index.ts",
+    "web": "vite --config apps/web/vite.config.ts",
+    "web:build": "vite build --config apps/web/vite.config.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "5.6.1",
+    "cors": "2.8.6",
+    "dotenv": "17.4.2",
+    "express": "5.2.1",
+    "viem": "2.55.10",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-node-test-runner": "3.0.17",
+    "@nomicfoundation/hardhat-viem": "3.0.9",
+    "@types/cors": "2.8.19",
+    "@types/express": "5.0.6",
+    "@types/node": "^22.15.30",
+    "hardhat": "3.11.1",
+    "tsx": "4.23.1",
+    "typescript": "~5.9.3",
+    "vite": "8.1.5"
+  }
+}
