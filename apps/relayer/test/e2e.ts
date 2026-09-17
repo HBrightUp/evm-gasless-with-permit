@@ -3,7 +3,7 @@
 import assert from "node:assert/strict";
 import { execFileSync, spawn, type ChildProcess } from "node:child_process";
 import { once } from "node:events";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:net";
 import { resolve } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
@@ -54,10 +54,11 @@ async function waitReady(service: ReturnType<typeof start>, check: () => Promise
   throw new Error("Test service did not become ready within 45 seconds");
 }
 
+const binary = resolve("cache", `relayer-e2e-${process.pid}${process.platform === "win32" ? ".exe" : ""}`);
+const emptyEnv = resolve("cache", `relayer-e2e-${process.pid}.env`);
+
 try {
   await mkdir("cache", { recursive: true });
-  const binary = resolve("cache", `relayer-e2e-${process.pid}${process.platform === "win32" ? ".exe" : ""}`);
-  const emptyEnv = resolve("cache", `relayer-e2e-${process.pid}.env`);
   await writeFile(emptyEnv, "# E2E uses only generated local accounts.\n");
   execFileSync("go", ["build", "-o", binary, "./apps/relayer"], { stdio: "inherit", windowsHide: true });
 
@@ -201,4 +202,5 @@ try {
       await exited;
     }
   }
+  await Promise.all([binary, emptyEnv].map((path) => rm(path, { force: true })));
 }

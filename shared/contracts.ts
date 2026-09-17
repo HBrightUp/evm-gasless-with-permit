@@ -1,12 +1,5 @@
-import {
-  parseAbi,
-  toFunctionSelector,
-  type Address,
-  type Hex,
-} from "viem";
+import { parseAbi, type Address, type Hex } from "viem";
 
-export const SEPOLIA_CHAIN_ID = 11_155_111;
-export const TOKEN_DECIMALS = 6;
 export const FORWARDER_NAME = "GaslessUSDTForwarder";
 export const FORWARDER_VERSION = "1";
 
@@ -34,10 +27,6 @@ export const gaslessTransferAbi = parseAbi([
   "function MAX_FEE_BPS() view returns (uint256)",
   "event GaslessTransfer(address indexed sender,address indexed recipient,uint256 amount,uint256 fee,address indexed relayer)",
 ]);
-
-export const transferWithPermitSelector = toFunctionSelector(
-  "transferWithPermit(address,uint256,uint256,uint256,uint8,bytes32,bytes32)",
-);
 
 export const permitTypes = {
   Permit: [
@@ -69,10 +58,6 @@ export type ForwardRequest = {
   deadline: number;
   data: Hex;
   signature: Hex;
-};
-
-export type UnsignedForwardRequest = Omit<ForwardRequest, "signature"> & {
-  nonce: bigint;
 };
 
 export function splitRpcSignature(signature: Hex): {
