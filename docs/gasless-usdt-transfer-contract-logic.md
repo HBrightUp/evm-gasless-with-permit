@@ -1643,6 +1643,6 @@ GaslessUSDTTransfer
 - [`contracts/mocks/MockUSDT.sol`](../contracts/mocks/MockUSDT.sol)
 - [`shared/contracts.ts`](../shared/contracts.ts)
 - [`apps/web/src/main.ts`](../apps/web/src/main.ts)
-- [`apps/relayer/src/index.ts`](../apps/relayer/src/index.ts)
-- [`apps/relayer/src/policy.ts`](../apps/relayer/src/policy.ts)
+- [`apps/relayer/internal/relay/server.go`](../apps/relayer/internal/relay/server.go)
+- [`apps/relayer/internal/relay/policy.go`](../apps/relayer/internal/relay/policy.go)
 - [`test/GaslessUSDTTransfer.ts`](../test/GaslessUSDTTransfer.ts)

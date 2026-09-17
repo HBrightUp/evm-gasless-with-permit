@@ -1035,7 +1035,7 @@ sequenceDiagram
 
 ### Relayer
 
-是运行在服务器上的 Node.js 程序和一个有 ETH 的钱包：
+是运行在服务器上的 Go / Gin 程序和一个有 ETH 的钱包：
 
 ```text
 负责接收前端请求
@@ -1080,7 +1080,7 @@ Forwarder 本身不会主动监听请求，也不会自己支付 Gas。智能合
 - 手续费必须等于当前报价；
 - Permit 有效期不能早于 ForwardRequest 有效期。
 
-代码位置：[`apps/relayer/src/policy.ts`](../apps/relayer/src/policy.ts)
+代码位置：[`apps/relayer/internal/relay/policy.go`](../apps/relayer/internal/relay/policy.go)
 
 这不是保护用户签名的唯一手段——Forwarder 和业务合约也会验证签名及业务规则。它主要保护 Relayer 的 ETH，防止攻击者利用赞助服务执行任意调用、消耗服务器资金。
 
@@ -1201,6 +1201,6 @@ Relayer
 - [`contracts/GaslessUSDTTransfer.sol`](../contracts/GaslessUSDTTransfer.sol)
 - [`shared/contracts.ts`](../shared/contracts.ts)
 - [`apps/web/src/main.ts`](../apps/web/src/main.ts)
-- [`apps/relayer/src/index.ts`](../apps/relayer/src/index.ts)
-- [`apps/relayer/src/policy.ts`](../apps/relayer/src/policy.ts)
+- [`apps/relayer/internal/relay/server.go`](../apps/relayer/internal/relay/server.go)
+- [`apps/relayer/internal/relay/policy.go`](../apps/relayer/internal/relay/policy.go)
 - [`test/GaslessUSDTTransfer.ts`](../test/GaslessUSDTTransfer.ts)

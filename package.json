@@ -8,28 +8,27 @@
   },
   "scripts": {
     "compile": "hardhat compile",
-    "test": "hardhat test",
+    "test": "npm run test:contracts && npm run test:relayer",
+    "test:contracts": "hardhat test",
+    "test:relayer": "go test ./apps/relayer/...",
+    "test:relayer:e2e": "npm run compile && node --import tsx apps/relayer/test/e2e.ts",
     "test:coverage": "hardhat test --coverage",
     "deploy:sepolia": "hardhat run scripts/deploy.ts --build-profile production --network sepolia",
     "mint:sepolia": "hardhat run scripts/mint-demo.ts --network sepolia",
-    "relayer": "node --import tsx apps/relayer/src/index.ts",
+    "relayer": "go run ./apps/relayer",
+    "relayer:build": "go build -o dist/relayer/ ./apps/relayer",
     "web": "vite --config apps/web/vite.config.ts",
     "web:build": "vite build --config apps/web/vite.config.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@openzeppelin/contracts": "5.6.1",
-    "cors": "2.8.6",
     "dotenv": "17.4.2",
-    "express": "5.2.1",
-    "viem": "2.55.10",
-    "zod": "4.4.3"
+    "viem": "2.55.10"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-node-test-runner": "3.0.17",
     "@nomicfoundation/hardhat-viem": "3.0.9",
-    "@types/cors": "2.8.19",
-    "@types/express": "5.0.6",
     "@types/node": "^22.15.30",
     "hardhat": "3.11.1",
     "tsx": "4.23.1",
